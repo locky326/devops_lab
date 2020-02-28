@@ -18,6 +18,7 @@ source ~/.bashrc
 #---------------  install versions  2.7.2 and 3.7.2--------------
 pyenv install 2.7.2
 pyenv install 3.7.2
+pyenv global 3.7.2
 #---------------  install virtualenv-----------------------------
 sudo pip install virtualenv
 #---------------  install virtualenv-----------------------------
