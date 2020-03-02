@@ -1,31 +1,59 @@
-import re
+def lin(s):
+    l = []
+    if s.find('=') != -1:
+        l.append('=')
+        ss = s.split('=')
+    else:
+        print('ERROR')
+        exit()
+    if ss[0].find('-') != -1:
+        l.append('-')
+        sss = ss[0].split('-')
+    elif ss[0].find('+') != -1:
+        l.append('+')
+        sss = ss[0].split('+')
+    elif ss[0].find('*') != -1:
+        l.append('*')
+        sss = ss[0].split('*')
+    elif ss[0].find('/') != -1:
+        l.append('/')
+        sss = ss[0].split('/')
+    else:
+        print('ERROR')
+        exit()
+    sss.append(ss[1])
+    for i in sss:
+        if i.isdigit():
+            l.append(int(i))
+        else:
+            print('ERROR')
+            exit()
+    return l
 
-inp = str(input())
-oper = re.split('\D', inp)
-symb = re.split('\d', inp)
-symbol = list(filter(None, symb))
 
-if len(oper) != 3:
+oper = lin(input())
+
+if len(oper) != 5:
     print("ERROR")
-elif symbol[1] != "=":
+elif oper[0] != "=":
     print("ERROR")
-elif symbol[0] == "*":
-    if (int(oper[0]) * int(oper[1])) == int(oper[2]):
+elif oper[1] == "*":
+    if oper[2] * oper[3] == oper[4]:
         print("YES")
     else:
         print("NO")
-elif symbol[0] == "/":
-    if (int(oper[0]) / int(oper[1])) == int(oper[2]):
+elif oper[1] == "/":
+    if oper[2] / oper[3] == oper[4]:
         print("YES")
     else:
         print("NO")
-elif symbol[0] == "+":
-    if (int(oper[0]) + int(oper[1])) == int(oper[2]):
+elif oper[1] == "+":
+    if oper[2] + oper[3] == oper[4]:
         print("YES")
     else:
         print("NO")
-elif symbol[0] == "-":
-    if (int(oper[0]) - int(oper[1])) == int(oper[2]):
+elif oper[1] == "-":
+    if oper[2] - oper[3] == oper[4]:
         print("YES")
     else:
         print("NO")
