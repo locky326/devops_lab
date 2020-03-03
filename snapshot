@@ -40,7 +40,7 @@ def out_file():
     while True:
         i += 1
         if args.file_format == 'txt':
-            sout = "SNAPSHOT " + str(i) + " : TIMESTAMP : " \
+            sout = "SNAPSHOT " + i + " : TIMESTAMP : " \
                    + str(time.ctime()) + " : CPU " \
                    + sysinf.cpu() + "%  RAM  " \
                    + sysinf.mu() + "%  VIRTUAL_RAM " \
