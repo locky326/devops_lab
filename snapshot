@@ -1,0 +1,77 @@
+#!/usr/bin/env python
+
+import psutil
+import time
+import threading
+import json
+import argparse
+
+
+class SysInf:
+
+    def __init__(self):
+        """"init part """
+
+    def cpu(self):
+        cpu = str(psutil.cpu_percent(interval=args.refresh_rate))
+        return cpu
+
+    def vmu(self):
+        vmu = str(psutil.virtual_memory().percent)
+        return vmu
+
+    def mu(self):
+        mu = str(psutil.disk_usage('/').percent)
+        return mu
+
+    def inout(self):
+        ino = str(psutil.disk_io_counters().write_time)
+        return ino
+
+    def net(self):
+        net = str(psutil.net_io_counters().packets_sent)
+        return net
+
+
+def out_file():
+    threading.Timer(args.refresh_rate, out_file)
+    sysinf = SysInf()
+    i = 0
+    while True:
+        i += 1
+        if args.file_format == 'txt':
+            sout = "SNAPSHOT " + str(i) + " : TIMESTAMP : " \
+                   + str(time.ctime()) + " : CPU " \
+                   + sysinf.cpu() + "%  RAM  " \
+                   + sysinf.mu() + "%  VIRTUAL_RAM " \
+                   + sysinf.vmu() + "%  IO_info " \
+                   + sysinf.inout() + " NET_info " \
+                   + sysinf.net() + " "
+            result_file = open('result.txt', 'a')
+            result_file.write(sout)
+            result_file.close()
+        elif args.file_format == 'json':
+            result = {
+                'SNAPSHOT': str(i), 'TIMESTAMP': str(time.ctime()),
+                'CPU': sysinf.cpu(),
+                'RAM': sysinf.mu(),
+                'VIRTUAL_RAM': sysinf.vmu(),
+                'IO_info': sysinf.inout(),
+                'NET_info': sysinf.net()
+            }
+            c_json(result)
+
+
+def c_json(arg):
+    with open('result.json', 'a') as file:
+        json.dump(arg, file, indent=2)
+
+
+parser = argparse.ArgumentParser()
+parser.add_argument("refresh_rate", type=int, nargs="?", const=1, default=300)
+parser.add_argument("file_format", const=1, nargs="?", default="txt")
+args = parser.parse_args()
+print(args.refresh_rate)
+print(args.file_format)
+
+out_file()
