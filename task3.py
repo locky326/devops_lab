@@ -1,22 +1,22 @@
 def lin(s):
-    l = []
+    lis = []
     if s.find('=') != -1:
-        l.append('=')
+        lis.append('=')
         ss = s.split('=')
     else:
         print('ERROR')
         exit()
     if ss[0].find('-') != -1:
-        l.append('-')
+        lis.append('-')
         sss = ss[0].split('-')
     elif ss[0].find('+') != -1:
-        l.append('+')
+        lis.append('+')
         sss = ss[0].split('+')
     elif ss[0].find('*') != -1:
-        l.append('*')
+        lis.append('*')
         sss = ss[0].split('*')
     elif ss[0].find('/') != -1:
-        l.append('/')
+        lis.append('/')
         sss = ss[0].split('/')
     else:
         print('ERROR')
@@ -24,11 +24,11 @@ def lin(s):
     sss.append(ss[1])
     for i in sss:
         if i.isdigit():
-            l.append(int(i))
+            lis.append(int(i))
         else:
             print('ERROR')
             exit()
-    return l
+    return lis
 
 
 oper = lin(input())
