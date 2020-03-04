@@ -24,24 +24,24 @@ Pas = getpass.getpass("Enter the password: ")
 
 try:
     st = requests.get('https://api.github.com/repos'
-                      '/' + args.user + '/' + args.repo + '/pulls/' + args.num, auth=(Usr, Pas))
+                      '/', args.user,'/', args.repo,'/pulls/', args.num, auth=(Usr, Pas))
     jsonRec = st.json()
 except BaseException:
     """error"""
 else:
     if st.status_code != 200:
-        print('\t\t\t\t\t\033[31m\033[43m\033[5m ERROR')
+        print('ERROR')
         exit(-2)
 
 if args.state:
-    print("State = " + jsonRec['state'])
+    print("State = ", jsonRec['state'])
 if args.r_label:
-    print("Repo Label = " + jsonRec['head']['label'])
+    print("Repo Label = ", jsonRec['head']['label'])
 if args.n_files:
-    print("Number of changed files = " + str(jsonRec['changed_files']))
+    print("Number of changed files = ", str(jsonRec['changed_files']))
 if args.n_com:
-    print("Number of commits = " + str(jsonRec['commits']))
+    print("Number of commits = ", str(jsonRec['commits']))
 if args.c_date:
-    print("Creation date = " + jsonRec['created_at'][:10])
+    print("Creation date = ", jsonRec['created_at'][:10])
 if args.c_time:
-    print("Creation time = " + jsonRec['created_at'][11:19])
+    print("Creation time = ", jsonRec['created_at'][11:19])
