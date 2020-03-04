@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+
+import requests
+import getpass
+import argparse
+
+cstr = argparse.ArgumentParser()
+cstr.add_argument("--version", "-V", action="version",
+                  help="version", version='v0.14 (c) Dmitriy Shishkovets')
+cstr.add_argument("--user", help="User of repo", type=str, required=True)
+cstr.add_argument("--repo", help="Rep name (devops_lab def)",
+                  nargs="?", const=1, default='devops_lab')
+cstr.add_argument("--num", help="Num of pull (33 by def)", nargs="?", const=1, default='33')
+cstr.add_argument("--state", action="store_true", help="Shows state of pull request")
+cstr.add_argument("--r_label", action="store_true", help="Shows Repository label")
+cstr.add_argument("--n_files", action="store_true", help="Shows number of changed files")
+cstr.add_argument("--n_com", action="store_true", help="Shows number of commits")
+cstr.add_argument("--c_date", action="store_true", help="Shows creation date")
+cstr.add_argument("--c_time", action="store_true", help="Shows creation time")
+args = cstr.parse_args()
+
+Usr = input("Enter Github Login: ")
+Pas = getpass.getpass("Enter the password: ")
+
+try:
+    st = requests.get('https://api.github.com/repos'
+                      '/' + args.user + '/' + args.repo + '/pulls/' + args.num, auth=(Usr, Pas))
+    jsonRec = st.json()
+except BaseException:
+    """error"""
+else:
+    if st.status_code != 200:
+        print('\t\t\t\t\t\033[31m\033[43m\033[5m ERROR')
+        exit(-2)
+
+if args.state:
+    print("State = " + jsonRec['state'])
+if args.r_label:
+    print("Repo Label = " + jsonRec['head']['label'])
+if args.n_files:
+    print("Number of changed files = " + str(jsonRec['changed_files']))
+if args.n_com:
+    print("Number of commits = " + str(jsonRec['commits']))
+if args.c_date:
+    print("Creation date = " + jsonRec['created_at'][:10])
+if args.c_time:
+    print("Creation time = " + jsonRec['created_at'][11:19])
