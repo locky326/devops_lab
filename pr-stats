@@ -24,7 +24,7 @@ Pas = getpass.getpass("Enter the password: ")
 
 try:
     st = requests.get('https://api.github.com/repos'
-                      '/', args.user,'/', args.repo,'/pulls/', args.num, auth=(Usr, Pas))
+                      '/' + args.user + '/' + args.repo + '/pulls/' + args.num, auth=(Usr, Pas))
     jsonRec = st.json()
 except BaseException:
     """error"""
