@@ -4,7 +4,7 @@ import argparse
 import os
 from datetime import datetime
 
-flist = []
+outdata = []
 
 cstr = argparse.ArgumentParser()
 cstr.add_argument("--version", "-V", action="version",
@@ -24,15 +24,15 @@ if args.lp:
 
 def list_files(path):
     with os.scandir(path) as entries:
-        for entry in entries:
-            if entry.is_file() and entry.name.endswith(args.ext):
+        for unit in entries:
+            if unit.is_file() and unit.name.endswith(args.ext):
                 if args.sd:
-                    info = entry.stat()
-                    flist.append(f"{get_date(info.st_mtime)} \t {entry.name}")
+                    info = unit.stat()
+                    outdata.append(f"{get_date(info.st_mtime)} \t {unit.name}")
                 else:
-                    flist.append(entry.name)
-            elif entry.is_dir() and args.lr:
-                list_files(entry.path)
+                    outdata.append(unit.name)
+            elif unit.is_dir() and args.lr:
+                list_files(unit.path)
 
 
 def get_date(timestamp):
@@ -42,6 +42,6 @@ def get_date(timestamp):
 
 
 list_files(spath)
-flist.sort()
-for e in flist:
+outdata.sort()
+for e in outdata:
     print(e)
