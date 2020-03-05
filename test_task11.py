@@ -13,5 +13,6 @@ class Test_task11(TestCase):
         self.assertFalse(task11.viskos(2019))
         self.assertTrue(task11.viskos(2020))
         self.assertTrue(task11.viskos(800))
+
     def tearDown(self):
         """Finish"""
