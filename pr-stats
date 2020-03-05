@@ -38,9 +38,9 @@ if args.state:
 if args.r_label:
     print("Repo Label = ", jsonRec['head']['label'])
 if args.n_files:
-    print("Number of changed files = ", str(jsonRec['changed_files']))
+    print("Number of changed files = ", jsonRec['changed_files'])
 if args.n_com:
-    print("Number of commits = ", str(jsonRec['commits']))
+    print("Number of commits = ", jsonRec['commits'])
 if args.c_date:
     print("Creation date = ", jsonRec['created_at'][:10])
 if args.c_time:
