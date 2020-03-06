@@ -1,13 +1,15 @@
 NameVirtualHost *:80
 
-<VirtualHost *:80>
-  ServerName www.domain.tld
-  DocumentRoot /www/domain
-  ServerAdmin www-admin@foo.example.com
-  <Directory "/usr/local/httpd/htdocs">
-     AllowOverride All
-     Options Indexes FollowSymLinks
-     Order allow,deny
-     Allow from all
-  </Directory>
-</VirtualHost>
+{% for vhost in apache_vhosts %}
+    <VirtualHost *:80>
+      ServerName {{ vhost.servername }}
+      DocumentRoot {{ vhost.documentroot }}
+      ServerAdmin {% if vhost.ServerAdmin %} {{ vhost.ServerAdmin }} {% endif %}
+      <Directory "/usr/local/httpd/htdocs">
+         AllowOverride All
+         Options Indexes FollowSymLinks
+         Order allow,deny
+         Allow from all
+      </Directory>
+    </VirtualHost>
+{% endfor %}

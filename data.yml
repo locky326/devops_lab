@@ -1,0 +1,7 @@
+apache_vhosts:
+- servername: "DimaServer111"
+  documentroot: "/www/dima1111"
+  ServerAdmin: www-dima@example.com
+- servername: "VasyaServer2222"
+  documentroot: "/www/vasya2222"
+  ServerAdmin: www-vasya@example.com
